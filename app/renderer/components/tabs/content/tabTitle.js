@@ -37,6 +37,7 @@ class TabTitle extends React.Component {
     props.addExtraGutter = tabUIState.addExtraGutterToTitle(currentWindow, frameKey)
     props.isTextWhite = tabUIState.checkIfTextColor(currentWindow, frameKey, 'white')
     props.gradientColor = tabUIState.getTabEndIconBackgroundColor(currentWindow, frameKey)
+    props.isDragging = tabState.isTabDragging(state, tabId)
     props.tabId = tabId
 
     return props
@@ -57,7 +58,7 @@ class TabTitle extends React.Component {
     return <div data-test-id='tabTitle'
       className={css(
         styles.tab__title,
-        !this.props.isPinned && perPageGradient.tab__title_gradient,
+        !this.props.isPinned && !this.props.isDragging && perPageGradient.tab__title_gradient,
         this.props.addExtraGutter && styles.tab__title_extraGutter,
         (this.props.isDarwin && this.props.isTextWhite) && styles.tab__title_isDarwin,
         // Windows specific style

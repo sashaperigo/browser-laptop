@@ -93,6 +93,12 @@ const setWindowPosition = (browserOpts, defaults, immutableWindowState) => {
     browserOpts.x = firstDefinedValue(browserOpts.x, browserOpts.left, browserOpts.screenX)
     browserOpts.y = firstDefinedValue(browserOpts.y, browserOpts.top, browserOpts.screenY)
   }
+  if (browserOpts.offsetX) {
+    browserOpts.x += browserOpts.offsetX
+  }
+  if (browserOpts.offsetY) {
+    browserOpts.y += browserOpts.offsetY
+  }
   return browserOpts
 }
 
@@ -259,7 +265,8 @@ const createWindow = (state, action) => {
     const defaultArgs = {
       // hide the window until the window reports that it is rendered
       show: false,
-      fullscreenable: true
+      fullscreenable: true,
+      enableLargerThanScreen: true
     }
     const enforcedArgs = {
       disposition: frameOpts.disposition

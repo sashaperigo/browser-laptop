@@ -223,6 +223,26 @@ const tabState = {
     return tab != null ? !!tab.get('pinned') : false
   },
 
+  isTabDragging: (state, tabId) => {
+    state = validateState(state)
+    tabId = validateId('tabId', tabId)
+    const dragSourceData = state.get('tabDragData')
+    return (
+      dragSourceData &&
+      tabId === dragSourceData.get('sourceTabId')
+    )
+  },
+
+  draggingTabId: (state) => {
+    state = validateState(state)
+    return state.getIn(['tabDragData', 'sourceTabId'])
+  },
+
+  draggingTabKey: (state) => {
+    state = validateState(state)
+    return state.getIn(['tabDragData', 'sourceTabKey'])
+  },
+
   getNonPinnedTabs: (state) => {
     state = validateState(state)
     return state.get('tabs').filter((tab) => !tab.get('pinned'))

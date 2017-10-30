@@ -54,12 +54,18 @@
 }
 
 .tabArea {
+  will-change: transform, position;
   box-sizing: border-box;
-  display: inline-block;
   position: relative;
-  vertical-align: top;
   overflow: hidden;
-  height: -webkit-fill-available;
+  bottom: 0; // when tab disappears, it gets absolute positioning and a top, left right, but no bottom
+  // add a border but hide it with negative margin so that it shows when tab is appearing / disappearing
+  border-width: 1px 1px 1px 1px;
+  background-color: #ddd;
+  margin: -1px 0 0 -1px;
+  border-style: solid;
+  border-color: #bbb;
+  z-index: 100;
   // There's a special case that tabs should span the full width
   // if there are a full set of them.
   &:not(.partOfFullPageSet) {
@@ -93,7 +99,13 @@
   }
 
   &.isDragging {
-    opacity: 0.2;
+    transform: translateX(var(--dragging-delta-x));
+    z-index: 200;
+  }
+
+  &.isActive {
+    z-index: 300;
+    border-bottom: none;
   }
 
   hr.dragIndicator {
@@ -227,6 +239,8 @@
 
 .pinnedTabs {
   height: -webkit-fill-available;
+  display: flex;
+  align-items: stretch;
   box-sizing: border-box;
   margin-left: 0;
   margin-top: 0;
